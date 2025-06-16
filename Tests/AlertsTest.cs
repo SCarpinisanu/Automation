@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace Automation
 {
-    public class Alerts : BasePage.BasePage
+    public class AlertsTest : BasePage.BasePage
     {
         [Test]
-        public void AlertButtonTest()
+        public void AlertButtonsTests()
         {
             homePage = new HomePage(webDriver!);
             commonPage = new CommonPage(webDriver!);
