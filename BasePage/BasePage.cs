@@ -21,6 +21,7 @@ namespace Automation.BasePage
         public JavaScriptMethods? javaScriptMethods;
         public ModalDialogsPage? modalDialogsPage;
         public TabsPage? tabsPage;
+        public AlertsPage? alertsPage;
 
         [SetUp]
         public void SetUp()
