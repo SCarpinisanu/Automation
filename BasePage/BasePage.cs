@@ -24,6 +24,7 @@ namespace Automation.BasePage
         public TabsPage? tabsPage;
         public AlertsPage? alertsPage;
         public WebTablesData? webTablesData;
+        public PracticeFormsData? practiceFormsData;
 
         [SetUp]
         public void SetUp()

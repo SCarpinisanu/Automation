@@ -1,0 +1,17 @@
+﻿<dataSets>
+	<dataSet_1>
+		<firstName>Sorin</firstName>
+		<lastName>Popescu</lastName>
+		<userEmail>Sorin.Popescu@gmail.com</userEmail>
+		<genderChosen>Male</genderChosen>
+		<userNumber>0770115330</userNumber>
+		<monthPick>5</monthPick>
+		<yearPick>1992</yearPick>
+		<dayPick>25</dayPick>
+		<subjectsChosen>Maths</subjectsChosen>
+		<subjectsChosen>Physics</subjectsChosen>
+		<hobbiesChosen>Sports</hobbiesChosen>
+		<hobbiesChosen>Reading</hobbiesChosen>
+		<currentAddress>Strada Maternitatii 13, Pitesti</currentAddress>
+	</dataSet_1>
+</dataSets>

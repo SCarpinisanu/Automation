@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Automation.HelperMethods;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
+using Automation.Access; // Assuming you have a PracticeFormsData class in this namespace
 
 namespace Automation.Pages
 {
@@ -36,6 +37,17 @@ namespace Automation.Pages
 
         }
 
+        public void CompleteForm(PracticeFormsData practiceFormsData)
+        {
+            this.elementMethods.FillElement(firstNameElement, practiceFormsData.FirstName!);
+            this.elementMethods.FillElement(lastNameElement, practiceFormsData.LastName!);
+            this.elementMethods.FillElement(userEmailElement, practiceFormsData.UserEmail!);
+            this.elementMethods.FillElement(userNumberElement, practiceFormsData.UserNumber!);
+            this.DateOfBirth(practiceFormsData);
+            this.FillSubjects(practiceFormsData);
+            this.elementMethods.FillElement(currentAddressElement, practiceFormsData.CurrentAddress!);
+        }
+
         public void SelectDOB(string monthPick, string yearPick, string dayPick)
         {
             var dateSelected = webDriver.FindElement(By.Id("dateOfBirthInput"));
@@ -51,6 +63,28 @@ namespace Automation.Pages
 
             var dayOfBirthSelect = webDriver.FindElement(By.CssSelector($"div.react-datepicker__day--0{dayPick}:not(.react-datepicker__day--outside-month)"));
             dayOfBirthSelect.Click();
+        }
+
+        public void DateOfBirth(PracticeFormsData practiceFormsData)
+        {
+            SelectDOB(practiceFormsData.MonthPick!, practiceFormsData.YearPick!, practiceFormsData.DayPick!);
+        }
+
+        IWebElement SubjectsInput => webDriver.FindElement(By.Id("subjectsInput"));
+        public void FillSubjects(PracticeFormsData practiceFormsData)
+        {
+            if (practiceFormsData.SubjectsChosenList.Count == 0)
+            {
+                Console.WriteLine("No subject has been selected");
+                return;
+            }
+            foreach (var subject in practiceFormsData.SubjectsChosenList)
+            {
+                elementMethods.FillElement(SubjectsInput, subject);
+                elementMethods.ScrollPageToElement(SubjectsInput);
+                var subjectOption = webDriver.FindElement(By.XPath($"//div[contains(@class, 'subjects-auto-complete__option') and text()='{subject}']"));
+                elementMethods.ClickOnElement(subjectOption);
+            }
         }
 
         IWebElement genderMale => webDriver.FindElement(By.XPath("//label[@for='gender-radio-1']"));
