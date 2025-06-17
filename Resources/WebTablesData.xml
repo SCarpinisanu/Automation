@@ -1,0 +1,18 @@
+﻿<DataSets>
+	<dataSet_1>
+		<firstName>Mercedesa</firstName>
+		<lastName>Feraru</lastName>
+		<userEmail>mertana.feraru@gmail.com</userEmail>
+		<age>24</age>
+		<salary>5500</salary>
+		<department>Marketing</department>
+	</dataSet_1>
+	<dataSet_2>
+		<firstName>Maria-Magdalena</firstName>
+		<lastName>Lampedusa</lastName>
+		<userEmail>merry.lampedusa@gmail.com</userEmail>
+		<age>78</age>
+		<salary></salary>
+		<department>Retired</department>
+	</dataSet_2>
+</DataSets>

@@ -1,3 +1,4 @@
+using Automation.Access;
 using Automation.BasePage.Browser;
 using Automation.HelperMethods;
 using Automation.Pages;
@@ -16,12 +17,13 @@ namespace Automation.BasePage
         public CommonPage? commonPage;
         //public BasePage.BasePage? basePage;
         public PracticeFormsPage? practiceFormsPage;
-        public WebTablesPage? webTables;
+        public WebTablesPage? webTablesPage;
         public FramesPage? framesPage;
         public JavaScriptMethods? javaScriptMethods;
         public ModalDialogsPage? modalDialogsPage;
         public TabsPage? tabsPage;
         public AlertsPage? alertsPage;
+        public WebTablesData? webTablesData;
 
         [SetUp]
         public void SetUp()

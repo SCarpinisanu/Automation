@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Automation.Access;
 using Automation.HelperMethods;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
@@ -43,6 +44,16 @@ namespace Automation.Pages
             elementMethods.FillElement(Age, age);
             elementMethods.FillElement(Salary, salary);
             elementMethods.FillElement(Department, department);
+        }
+
+        public void FillFieldsXML(WebTablesData webTablesData)
+        {
+            elementMethods.FillElement(FirstName, webTablesData.FirstName!);
+            elementMethods.FillElement(LastName, webTablesData.LastName!);
+            elementMethods.FillElement(Email, webTablesData.UserEmail!);
+            elementMethods.FillElement(Age, webTablesData.Age!);
+            elementMethods.FillElement(Salary, webTablesData.Salary!);
+            elementMethods.FillElement(Department, webTablesData.Department!);
         }
 
         private IWebElement SubmitButton => webWebDriver.FindElement(By.Id("submit"));

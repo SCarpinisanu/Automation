@@ -55,20 +55,20 @@ namespace Automation
         {
             homePage = new HomePage(webDriver!);
             commonPage = new CommonPage(webDriver!);
-            webTables = new WebTablesPage(webDriver!);
+            webTablesPage = new WebTablesPage(webDriver!);
 
             homePage.ClickOnOption(0);
 
             commonPage.GoToDesiredMenuItem("Web Tables");
 
-            webTables.ClickAddNewRecordButton();
+            webTablesPage.ClickAddNewRecordButton();
 
-            webTables.FillFields("Ion", "Ionescu-Mizil", "ion.ionescu@mail.com", "28", "7800", "IT");
-            webTables.SubmitForm();
+            webTablesPage.FillFields("Ion", "Ionescu-Mizil", "ion.ionescu@mail.com", "28", "7800", "IT");
+            webTablesPage.SubmitForm();
 
             // Assertion for the new record
             Assert.That(
-                webTables.IsRecordPresent("Ion", "Ionescu-Mizil", "ion.ionescu@mail.com", "28", "7800", "IT"),
+                webTablesPage.IsRecordPresent("Ion", "Ionescu-Mizil", "ion.ionescu@mail.com", "28", "7800", "IT"),
                 Is.True,
                 "The new record was not found in the table with the expected values."
             );
