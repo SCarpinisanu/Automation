@@ -84,16 +84,7 @@ namespace Automation.Pages
                 this.elementMethods.FillElement(UserNumberElement, practiceFormsData.UserNumber!);
             }
 
-            if (practiceFormsData.GenderChosen.Equals(genderMale) || practiceFormsData.GenderChosen.Equals(genderFemale))
-            {
-                this.ChooseGender(practiceFormsData.GenderChosen);
-            }
-            else
-            {
-                Console.WriteLine("Field is mandatory but is missing - using 'Other'.");
-                practiceFormsData.GenderChosen = "Other"; // Default value
-                this.ChooseGender(practiceFormsData.GenderChosen!);
-            }
+            this.ChooseGender(practiceFormsData.GenderChosen);
 
             if (string.IsNullOrWhiteSpace(practiceFormsData.MonthPick) || string.IsNullOrWhiteSpace(practiceFormsData.YearPick) || string.IsNullOrWhiteSpace(practiceFormsData.DayPick))
             {
@@ -206,6 +197,7 @@ namespace Automation.Pages
                     break;
                 default:
                     Console.WriteLine("No gender was selected or wrong text - using default 'Other'!!!");
+                    elementMethods.ClickOnElement(genderOther);
                     break;
             }
         }

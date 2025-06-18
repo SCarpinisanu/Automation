@@ -33,7 +33,7 @@
 		//Minimum data set
 		<firstName>John</firstName>
 		<lastName>Doe</lastName>
-		<genderChosen>Mamifer</genderChosen>
+		<genderChosen></genderChosen>
 		<userNumber>0775236258</userNumber>
 	</dataSet_3>
 </dataSets>
