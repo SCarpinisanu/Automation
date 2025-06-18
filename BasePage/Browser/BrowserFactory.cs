@@ -12,7 +12,7 @@ namespace Automation.BasePage.Browser
     {
         public IWebDriver GetBrowserFactory()
         {
-            string browser = "Edge";
+            string browser = "Chrome";
 
             switch (browser)
             {

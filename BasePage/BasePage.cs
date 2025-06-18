@@ -8,14 +8,13 @@ using OpenQA.Selenium.Chrome;
 
 namespace Automation.BasePage
 {
-    public class BasePage : IDisposable
+    public class BasePage
     {
-        public IWebDriver? webDriver;
+        private IWebDriver? webDriver; // Changed to private to encapsulate the field
 
         public ElementMethods? elementMethods;
         public HomePage? homePage;
         public CommonPage? commonPage;
-        //public BasePage.BasePage? basePage;
         public PracticeFormsPage? practiceFormsPage;
         public WebTablesPage? webTablesPage;
         public FramesPage? framesPage;
@@ -30,25 +29,16 @@ namespace Automation.BasePage
         public void SetUp()
         {
             webDriver = new BrowserFactory().GetBrowserFactory();
-            //webDriver = new ChromeDriver();
             webDriver.Navigate().GoToUrl("https://demoqa.com/");
-            //webDriver.Manage().Window.Maximize();
         }
 
         [TearDown]
         public void TearDown()
         {
-            Dispose();
-        }
-
-        public void Dispose()
-        {
-            System.Threading.Thread.Sleep(1000); // Wait for 1 second before closing the browser 
             if (webDriver != null)
             {
                 webDriver.Quit();
-                webDriver.Dispose();
-                webDriver = null;
+                webDriver.Dispose(); // Explicitly dispose of the webDriver to satisfy NUnit1032
             }
         }
     }

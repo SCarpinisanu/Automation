@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using Automation.Access;
 using Automation.HelperMethods;
 using Automation.Pages;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
+using NUnit.Framework;
 
 namespace Automation.Tests
 {
@@ -19,14 +22,19 @@ namespace Automation.Tests
             elementMethods = new ElementMethods(webDriver!);
             practiceFormsPage = new PracticeFormsPage(webDriver!);
 
-            var practiceFormsData = new PracticeFormsData(1); // Assuming 1 is the dataset number
+            var practiceFormsData = new PracticeFormsData(1);
 
-            homePage.ClickOnOption(2);
+            homePage.ClickOnOption(1);
+            commonPage.GoToDesiredMenuItem("Practice Form");
+            practiceFormsPage.CompleteForm(practiceFormsData);
+            practiceFormsPage.SubmitForm();
 
-            commonPage.GoToDesiredMenuItem("Practice Forms");
+            // Wait for the modal to appear
+            var wait = new WebDriverWait(webDriver!, TimeSpan.FromSeconds(5));
+            var modalTitle = wait.Until(driver =>
+                driver.FindElement(By.CssSelector("div.modal-title.h4#example-modal-sizes-title-lg")));
 
-            practiceFormsPage.CompleteForm(practiceFormsData); // Fill the form with data from XML file
-
+            Assert.That(modalTitle.Text, Is.EqualTo("Thanks for submitting the form"));
         }
     }
 }

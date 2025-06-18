@@ -1,12 +1,14 @@
-﻿using System;
+﻿using Automation.Access; // Assuming you have a PracticeFormsData class in this namespace
+using Automation.HelperMethods;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
+using Automation.BasePage;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Automation.HelperMethods;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
-using Automation.Access; // Assuming you have a PracticeFormsData class in this namespace
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Automation.Pages
 {
@@ -21,31 +23,33 @@ namespace Automation.Pages
             elementMethods = new ElementMethods(webDriver);
         }
 
-        IWebElement firstNameElement => webDriver.FindElement(By.Id("firstName"));
-        IWebElement lastNameElement => webDriver.FindElement(By.Id("lastName"));
-        IWebElement userEmailElement => webDriver.FindElement(By.Id("userEmail"));
-        IWebElement userNumberElement => webDriver.FindElement(By.Id("userNumber"));
-        IWebElement currentAddressElement => webDriver.FindElement(By.Id("currentAddress"));
+        public IWebElement FirstNameElement => webDriver.FindElement(By.Id("firstName"));
+        public IWebElement LastNameElement => webDriver.FindElement(By.Id("lastName"));
+        public IWebElement UserEmailElement => webDriver.FindElement(By.Id("userEmail"));
+        public IWebElement UserNumberElement => webDriver.FindElement(By.Id("userNumber"));
+        public IWebElement CurrentAddressElement => webDriver.FindElement(By.Id("currentAddress"));
 
         public void CompleteFirstRegion(string firstName, string lastName, string userEmail, string userNumber, string currentAddress)
         {
-            this.elementMethods.FillElement(firstNameElement, firstName);
-            this.elementMethods.FillElement(lastNameElement, lastName);
-            this.elementMethods.FillElement(userEmailElement, userEmail);
-            this.elementMethods.FillElement(userNumberElement, userNumber);
-            this.elementMethods.FillElement(currentAddressElement, currentAddress);
+            this.elementMethods.FillElement(FirstNameElement, firstName);
+            this.elementMethods.FillElement(LastNameElement, lastName);
+            this.elementMethods.FillElement(UserEmailElement, userEmail);
+            this.elementMethods.FillElement(UserNumberElement, userNumber);
+            this.elementMethods.FillElement(CurrentAddressElement, currentAddress);
 
         }
 
         public void CompleteForm(PracticeFormsData practiceFormsData)
         {
-            this.elementMethods.FillElement(firstNameElement, practiceFormsData.FirstName!);
-            this.elementMethods.FillElement(lastNameElement, practiceFormsData.LastName!);
-            this.elementMethods.FillElement(userEmailElement, practiceFormsData.UserEmail!);
-            this.elementMethods.FillElement(userNumberElement, practiceFormsData.UserNumber!);
+            this.elementMethods.FillElement(FirstNameElement, practiceFormsData.FirstName!);
+            this.elementMethods.FillElement(LastNameElement, practiceFormsData.LastName!);
+            this.elementMethods.FillElement(UserEmailElement, practiceFormsData.UserEmail!);
+            this.elementMethods.FillElement(UserNumberElement, practiceFormsData.UserNumber!);
+            this.ChooseGender(practiceFormsData.GenderChosen);
             this.DateOfBirth(practiceFormsData);
             this.FillSubjects(practiceFormsData);
-            this.elementMethods.FillElement(currentAddressElement, practiceFormsData.CurrentAddress!);
+            this.SelectHobbiesByData(practiceFormsData);
+            this.elementMethods.FillElement(CurrentAddressElement, practiceFormsData.CurrentAddress!);
         }
 
         public void SelectDOB(string monthPick, string yearPick, string dayPick)
@@ -67,12 +71,30 @@ namespace Automation.Pages
 
         public void DateOfBirth(PracticeFormsData practiceFormsData)
         {
-            SelectDOB(practiceFormsData.MonthPick!, practiceFormsData.YearPick!, practiceFormsData.DayPick!);
+            // Open the date picker
+            var selectDate = webDriver.FindElement(By.Id("dateOfBirthInput"));
+            selectDate.Click();
+
+            // Select year
+            var yearSelect = new SelectElement(webDriver.FindElement(By.CssSelector(".react-datepicker__year-select")));
+            yearSelect.SelectByValue(practiceFormsData.YearPick!);
+
+            // Select month (0-based index)
+            var monthSelect = new SelectElement(webDriver.FindElement(By.CssSelector(".react-datepicker__month-select")));
+            monthSelect.SelectByValue((int.Parse(practiceFormsData.MonthPick!) - 1).ToString());
+
+            // Select day
+            string daySelector = $".react-datepicker__day--0{int.Parse(practiceFormsData.DayPick!):D2}:not(.react-datepicker__day--outside-month)";
+            var dayElement = webDriver.FindElement(By.CssSelector(daySelector));
+            dayElement.Click();
         }
 
         IWebElement SubjectsInput => webDriver.FindElement(By.Id("subjectsInput"));
         public void FillSubjects(PracticeFormsData practiceFormsData)
         {
+            // Scroll vertically by 500 pixels
+            ((IJavaScriptExecutor)webDriver).ExecuteScript("window.scrollBy(0,500);");
+
             if (practiceFormsData.SubjectsChosenList.Count == 0)
             {
                 Console.WriteLine("No subject has been selected");
@@ -81,7 +103,7 @@ namespace Automation.Pages
             foreach (var subject in practiceFormsData.SubjectsChosenList)
             {
                 elementMethods.FillElement(SubjectsInput, subject);
-                elementMethods.ScrollPageToElement(SubjectsInput);
+                //elementMethods.ScrollPageToElement(SubjectsInput);
                 var subjectOption = webDriver.FindElement(By.XPath($"//div[contains(@class, 'subjects-auto-complete__option') and text()='{subject}']"));
                 elementMethods.ClickOnElement(subjectOption);
             }
@@ -129,6 +151,50 @@ namespace Automation.Pages
                     Console.WriteLine($"The hobby named {hobby} is not in the list");
                 }
             }
+        }
+
+        public void SelectHobbiesByData(PracticeFormsData practiceFormsData)
+        {
+            if (string.IsNullOrWhiteSpace(practiceFormsData.HobbiesChosen))
+            {
+                Console.WriteLine("No hobby has been selected");
+                return;
+            }
+
+            // Split hobbies if they are comma-separated in XML
+            var hobbies = practiceFormsData.HobbiesChosen
+                .Split(new[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(h => h.Trim())
+                .ToArray();
+
+            foreach (var hobby in hobbies)
+            {
+                // Find the label by its text and click it
+                try
+                {
+                    var label = webDriver.FindElement(By.XPath($"//label[text()='{hobby}']"));
+                    elementMethods.ClickOnElement(label);
+                }
+                catch (NoSuchElementException)
+                {
+                    Console.WriteLine($"The hobby named {hobby} is not in the list");
+                }
+            }
+        }
+
+        public void SubmitForm()
+        {
+            // Locate the submit button
+            var submitButton = webDriver.FindElement(By.Id("submit"));
+
+            // Click the submit button
+            submitButton.Click();
+        }
+
+        public void CloseModal()
+        {
+            var closeButton = webDriver.FindElement(By.Id("closeLargeModal"));
+            elementMethods.ClickOnElement(closeButton);
         }
     }
 }

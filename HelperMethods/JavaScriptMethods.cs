@@ -32,5 +32,10 @@ namespace Automation.HelperMethods
         {
             executor.ExecuteScript($"window.scrollTo({xAxe}, {yAxe})");
         }
+
+        internal static void HandleIframeAndClick(IWebDriver webDriver, IWebElement subjectsInput)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

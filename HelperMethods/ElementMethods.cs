@@ -42,7 +42,18 @@ namespace Automation.HelperMethods
         public void ScrollPageToElement(IWebElement element)
         {
             ((IJavaScriptExecutor)_driver)
-                .ExecuteScript("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", element);
+                .ExecuteScript("arguments[0].scrollIntoView({behavior: 'smooth', block: 'nearest'});", element);
+        }
+
+        public void HandleIframeAndClick(IWebElement element)
+        {
+            var iframe = _driver.FindElements(By.TagName("iframe"))
+                                .FirstOrDefault(static f => f.GetAttribute("id")?.Contains("google_ads_iframe") == true);
+            if (iframe != null)
+            {
+                ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].style.display='none';", iframe);
+            }
+            ClickOnElement(element);
         }
     }
 }
