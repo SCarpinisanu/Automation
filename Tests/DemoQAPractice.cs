@@ -8,6 +8,7 @@ namespace Automation
 {
     public class DemoQAPractice : BasePage.BasePage
     {
+        public IWebDriver? webDriver;
         [Test]
         public void ClickOnOneCardFromHomePageMethod()
         {
@@ -23,7 +24,7 @@ namespace Automation
         {
             homePage = new HomePage(webDriver!);
             commonPage = new CommonPage(webDriver!);
-            practiceFormsPage = new PracticeFormsPage(webDriver!);
+            practiceFormsPage = new PracticeFormPage(webDriver!);
 
             homePage.ClickOnOption(1);
 
@@ -37,7 +38,7 @@ namespace Automation
         {
             homePage = new HomePage(webDriver!);
             commonPage = new CommonPage(webDriver!);
-            practiceFormsPage = new PracticeFormsPage(webDriver!);
+            practiceFormsPage = new PracticeFormPage(webDriver!);
 
             homePage.ClickOnOption(1);
 

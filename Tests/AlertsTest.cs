@@ -1,5 +1,6 @@
 ﻿using Automation.HelperMethods;
 using Automation.Pages;
+using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace Automation
 {
     public class AlertsTest : BasePage.BasePage
     {
+        public IWebDriver? webDriver;
         [Test]
         public void AlertButtonsTests()
         {

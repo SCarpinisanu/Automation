@@ -12,12 +12,12 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Automation.Pages
 {
-    public class PracticeFormsPage
+    public class PracticeFormPage
     {
         public IWebDriver webDriver;
         public ElementMethods elementMethods;
 
-        public PracticeFormsPage(IWebDriver webDriver)
+        public PracticeFormPage(IWebDriver webDriver)
         {
             this.webDriver = webDriver;
             elementMethods = new ElementMethods(webDriver);

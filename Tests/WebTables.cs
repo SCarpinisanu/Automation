@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 using Automation.Access;
 using Automation.HelperMethods;
 using Automation.Pages;
+using OpenQA.Selenium;
 
 namespace Automation.Tests
 {
     public class WebTables : BasePage.BasePage
     {
+        public IWebDriver? webDriver;
         [Test]
         public void WebTablesTest()
         {

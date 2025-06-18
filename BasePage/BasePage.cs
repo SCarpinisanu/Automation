@@ -10,12 +10,12 @@ namespace Automation.BasePage
 {
     public class BasePage
     {
-        private IWebDriver? webDriver; // Changed to private to encapsulate the field
+        private IWebDriver? driver; // Changed to private to encapsulate the field
 
         public ElementMethods? elementMethods;
         public HomePage? homePage;
         public CommonPage? commonPage;
-        public PracticeFormsPage? practiceFormsPage;
+        public PracticeFormPage? practiceFormsPage;
         public WebTablesPage? webTablesPage;
         public FramesPage? framesPage;
         public JavaScriptMethods? javaScriptMethods;
@@ -28,17 +28,17 @@ namespace Automation.BasePage
         [SetUp]
         public void SetUp()
         {
-            webDriver = new BrowserFactory().GetBrowserFactory();
-            webDriver.Navigate().GoToUrl("https://demoqa.com/");
+            driver = new BrowserFactory().GetBrowserFactory();
+            driver.Navigate().GoToUrl("https://demoqa.com/");
         }
 
         [TearDown]
         public void TearDown()
         {
-            if (webDriver != null)
+            if (driver != null)
             {
-                webDriver.Quit();
-                webDriver.Dispose(); // Explicitly dispose of the webDriver to satisfy NUnit1032
+                driver.Quit();
+                driver.Dispose(); // Explicitly dispose of the webDriver to satisfy NUnit1032
             }
         }
     }

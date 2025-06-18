@@ -12,15 +12,16 @@ using NUnit.Framework;
 
 namespace Automation.Tests
 {
-    public class PracticeFormsTest : BasePage.BasePage
+    public class PracticeFormTema : BasePage.BasePage
     {
+        public IWebDriver? webDriver;
         [Test]
-        public void PracticeFormsTest1()
+        public void PracticeFormTemaTest()
         {
             homePage = new HomePage(webDriver!);
             commonPage = new CommonPage(webDriver!);
             elementMethods = new ElementMethods(webDriver!);
-            practiceFormsPage = new PracticeFormsPage(webDriver!);
+            practiceFormsPage = new PracticeFormPage(webDriver!);
 
             var practiceFormsData = new PracticeFormsData(1);
 
