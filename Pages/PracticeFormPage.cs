@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using Automation.BasePage.Browser;
 
 namespace Automation.Pages
 {
@@ -41,15 +42,95 @@ namespace Automation.Pages
 
         public void CompleteForm(PracticeFormsData practiceFormsData)
         {
-            this.elementMethods.FillElement(FirstNameElement, practiceFormsData.FirstName!);
-            this.elementMethods.FillElement(LastNameElement, practiceFormsData.LastName!);
-            this.elementMethods.FillElement(UserEmailElement, practiceFormsData.UserEmail!);
-            this.elementMethods.FillElement(UserNumberElement, practiceFormsData.UserNumber!);
-            this.ChooseGender(practiceFormsData.GenderChosen);
-            this.DateOfBirth(practiceFormsData);
-            this.FillSubjects(practiceFormsData);
-            this.SelectHobbiesByData(practiceFormsData);
-            this.elementMethods.FillElement(CurrentAddressElement, practiceFormsData.CurrentAddress!);
+            if (string.IsNullOrWhiteSpace(practiceFormsData.FirstName))
+            {
+                Console.WriteLine("First Name is mandatory but is missing - using 'Ion'");
+                practiceFormsData.FirstName = "Ion"; // Default value
+                this.elementMethods.FillElement(FirstNameElement, practiceFormsData.FirstName!);
+            }
+            else
+            {
+                this.elementMethods.FillElement(FirstNameElement, practiceFormsData.FirstName!);
+            }
+
+            if (string.IsNullOrWhiteSpace(practiceFormsData.LastName))
+            {
+                Console.WriteLine("Last Name is mandatory but is missing - using 'Popescu'");
+                practiceFormsData.LastName = "Popescu"; // Default value
+                this.elementMethods.FillElement(LastNameElement, practiceFormsData.LastName!);
+            }
+            else
+            {
+                this.elementMethods.FillElement(LastNameElement, practiceFormsData.LastName!);
+            }
+
+            if (string.IsNullOrWhiteSpace(practiceFormsData.UserEmail))
+            {
+                Console.WriteLine("User email is empty or null, skipping email field fill.");
+            }
+            else
+            {
+                this.elementMethods.FillElement(UserEmailElement, practiceFormsData.UserEmail!);
+            }
+
+            if (string.IsNullOrWhiteSpace(practiceFormsData.UserNumber))
+            {
+                Console.WriteLine("User number is mandatory - using 1234567890.");
+                practiceFormsData.UserNumber = "1234567890"; // Default value
+                this.elementMethods.FillElement(UserNumberElement, practiceFormsData.UserNumber!);
+            }
+            else 
+            {
+                this.elementMethods.FillElement(UserNumberElement, practiceFormsData.UserNumber!);
+            }
+
+            if (practiceFormsData.GenderChosen.Equals(genderMale) || practiceFormsData.GenderChosen.Equals(genderFemale))
+            {
+                this.ChooseGender(practiceFormsData.GenderChosen);
+            }
+            else
+            {
+                Console.WriteLine("Field is mandatory but is missing - using 'Other'.");
+                practiceFormsData.GenderChosen = "Other"; // Default value
+                this.ChooseGender(practiceFormsData.GenderChosen!);
+            }
+
+            if (string.IsNullOrWhiteSpace(practiceFormsData.MonthPick) || string.IsNullOrWhiteSpace(practiceFormsData.YearPick) || string.IsNullOrWhiteSpace(practiceFormsData.DayPick))
+            {
+                Console.WriteLine("Date of Birth is not mandatory - skipping field");
+            }
+            else
+            {
+                this.DateOfBirth(practiceFormsData);
+            }
+            
+            if (practiceFormsData.SubjectsChosenList.Count == 0)
+            {
+                Console.WriteLine("No subject has been selected - skipping field.");
+            }
+            else 
+            {
+                this.FillSubjects(practiceFormsData);
+            }
+
+            if (string.IsNullOrWhiteSpace(practiceFormsData.HobbiesChosen))
+            {
+                Console.WriteLine("No hobbies chosen - skipping field");
+            }
+            else
+            {
+                this.SelectHobbiesByData(practiceFormsData);
+            }
+
+
+            if (string.IsNullOrWhiteSpace(practiceFormsData.CurrentAddress))
+            {
+                Console.WriteLine("Current address is empty or null, skipping current address.");
+            }
+            else
+            {
+                this.elementMethods.FillElement(CurrentAddressElement, practiceFormsData.CurrentAddress!);
+            }
         }
 
         public void SelectDOB(string monthPick, string yearPick, string dayPick)
@@ -92,8 +173,8 @@ namespace Automation.Pages
         IWebElement SubjectsInput => webDriver.FindElement(By.Id("subjectsInput"));
         public void FillSubjects(PracticeFormsData practiceFormsData)
         {
-            // Scroll vertically by 500 pixels
-            ((IJavaScriptExecutor)webDriver).ExecuteScript("window.scrollBy(0,500);");
+            ((IJavaScriptExecutor)webDriver)
+                .ExecuteScript("arguments[0].scrollIntoView({ behavior: 'smooth', block: 'center' });", SubjectsInput);
 
             if (practiceFormsData.SubjectsChosenList.Count == 0)
             {
@@ -123,11 +204,8 @@ namespace Automation.Pages
                 case "Female":
                     elementMethods.ClickOnElement(genderFemale);
                     break;
-                case "Other":
-                    elementMethods.ClickOnElement(genderOther);
-                    break;
                 default:
-                    Console.WriteLine("No gender was selected!!!");
+                    Console.WriteLine("No gender was selected or wrong text - using default 'Other'!!!");
                     break;
             }
         }
@@ -184,8 +262,9 @@ namespace Automation.Pages
 
         public void SubmitForm()
         {
-            // Locate the submit button
+            // Locate and wait for the submit button to be visible and clickable
             var submitButton = webDriver.FindElement(By.Id("submit"));
+            ((IJavaScriptExecutor)webDriver).ExecuteScript("arguments[0].scrollIntoView(true);", submitButton);
 
             // Click the submit button
             submitButton.Click();
@@ -193,8 +272,9 @@ namespace Automation.Pages
 
         public void CloseModal()
         {
+            Thread.Sleep(2000); // Wait for 2 seconds to see the modal
             var closeButton = webDriver.FindElement(By.Id("closeLargeModal"));
-            elementMethods.ClickOnElement(closeButton);
+            closeButton.Click();
         }
     }
 }

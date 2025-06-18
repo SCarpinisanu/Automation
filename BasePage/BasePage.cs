@@ -37,6 +37,7 @@ namespace Automation.BasePage
         {
             if (webDriver != null)
             {
+                Thread.Sleep(1000);
                 webDriver.Quit();
                 webDriver.Dispose(); // Explicitly dispose of the webDriver to satisfy NUnit1032
             }

@@ -47,7 +47,7 @@ namespace Automation
                 "Ion", "Popescu", "Ion.Pop@email.com", "0775 236 225", "Pitesti, str. Popa Sapca, 2");
             practiceFormsPage.SelectDOB("February", "1967", "06");
             practiceFormsPage.ChooseGender("Male");
-            practiceFormsPage.SelectHobbiesByName("Reading", "Musical");
+            practiceFormsPage.SelectHobbiesByName("Reading", "Music");
         }
 
         [Test]

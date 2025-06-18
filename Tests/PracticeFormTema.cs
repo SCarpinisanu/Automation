@@ -22,7 +22,7 @@ namespace Automation.Tests
             elementMethods = new ElementMethods(webDriver!);
             practiceFormsPage = new PracticeFormPage(webDriver!);
 
-            var practiceFormsData = new PracticeFormsData(1);
+            var practiceFormsData = new PracticeFormsData(3);
 
             homePage.ClickOnOption(1);
             commonPage.GoToDesiredMenuItem("Practice Form");
@@ -34,7 +34,9 @@ namespace Automation.Tests
             var modalTitle = wait.Until(driver =>
                 driver.FindElement(By.CssSelector("div.modal-title.h4#example-modal-sizes-title-lg")));
 
+            Thread.Sleep(1000); // Optional: Wait for the modal to fully render
             Assert.That(modalTitle.Text, Is.EqualTo("Thanks for submitting the form"));
+            practiceFormsPage.CloseModal();
         }
     }
 }

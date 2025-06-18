@@ -1,5 +1,6 @@
 ﻿<dataSets>
 	<dataSet_1>
+		//Valid data set
 		<firstName>Sorin</firstName>
 		<lastName>Popescu</lastName>
 		<userEmail>Sorin.Popescu@gmail.com</userEmail>
@@ -10,8 +11,29 @@
 		<dayPick>25</dayPick>
 		<subjectsChosen>Maths</subjectsChosen>
 		<subjectsChosen>Physics</subjectsChosen>
-		<hobbiesChosen>Sports</hobbiesChosen>
-		<hobbiesChosen>Reading</hobbiesChosen>
+		<hobbiesChosen>Music, Sports</hobbiesChosen>
 		<currentAddress>Strada Maternitatii 13, Pitesti</currentAddress>
 	</dataSet_1>
+	<dataSet_2> 
+		//Month value is not between 1 and 12
+		<firstName>Maria</firstName>
+		<lastName>Magdalena</lastName>
+		<userEmail>tt.gg@gmail.com</userEmail>
+		<genderChosen>Mamifer</genderChosen>
+		<userNumber>0770115330</userNumber>
+		<monthPick>13</monthPick>
+		<yearPick>1974</yearPick>
+		<dayPick>10</dayPick>
+		<subjectsChosen>Maths</subjectsChosen>
+		<subjectsChosen>Physics</subjectsChosen>
+		<hobbiesChosen>Reading, Sports</hobbiesChosen>
+		<currentAddress>Strada Maternitatii 13, Pitesti</currentAddress>
+	</dataSet_2>
+	<dataSet_3>
+		//Minimum data set
+		<firstName>John</firstName>
+		<lastName>Doe</lastName>
+		<genderChosen>Mamifer</genderChosen>
+		<userNumber>0775236258</userNumber>
+	</dataSet_3>
 </dataSets>
