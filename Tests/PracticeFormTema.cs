@@ -14,7 +14,6 @@ namespace Automation.Tests
 {
     public class PracticeFormTema : BasePage.BasePage
     {
-        public IWebDriver? webDriver;
         [Test]
         public void PracticeFormTemaTest()
         {

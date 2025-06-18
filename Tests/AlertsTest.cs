@@ -11,7 +11,6 @@ namespace Automation
 {
     public class AlertsTest : BasePage.BasePage
     {
-        public IWebDriver? webDriver;
         [Test]
         public void AlertButtonsTests()
         {

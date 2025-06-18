@@ -10,7 +10,7 @@ namespace Automation.BasePage
 {
     public class BasePage
     {
-        private IWebDriver? driver; // Changed to private to encapsulate the field
+        public IWebDriver? webDriver;
 
         public ElementMethods? elementMethods;
         public HomePage? homePage;
@@ -28,17 +28,17 @@ namespace Automation.BasePage
         [SetUp]
         public void SetUp()
         {
-            driver = new BrowserFactory().GetBrowserFactory();
-            driver.Navigate().GoToUrl("https://demoqa.com/");
+            webDriver = new BrowserFactory().GetBrowserFactory();
+            webDriver.Navigate().GoToUrl("https://demoqa.com/");
         }
 
         [TearDown]
         public void TearDown()
         {
-            if (driver != null)
+            if (webDriver != null)
             {
-                driver.Quit();
-                driver.Dispose(); // Explicitly dispose of the webDriver to satisfy NUnit1032
+                webDriver.Quit();
+                webDriver.Dispose(); // Explicitly dispose of the webDriver to satisfy NUnit1032
             }
         }
     }

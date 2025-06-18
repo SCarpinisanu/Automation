@@ -12,7 +12,6 @@ namespace Automation.Tests
 {
     public class WebTables : BasePage.BasePage
     {
-        public IWebDriver? webDriver;
         [Test]
         public void WebTablesTest()
         {

@@ -8,7 +8,6 @@ namespace Automation
 {
     public class DemoQAPractice : BasePage.BasePage
     {
-        public IWebDriver? webDriver;
         [Test]
         public void ClickOnOneCardFromHomePageMethod()
         {
