@@ -23,9 +23,11 @@ namespace Automation.Access
             YearPick = dataSets?.Element("yearPick")?.Value;
             DayPick = dataSets?.Element("dayPick")?.Value;
             //SubjectsChosen = dataSets?.Element("subjectsChosen")?.Value;
-            SubjectsChosenList = dataSets?.Elements("subjectsChosen").Select(e => e.Value).ToList() ?? new List<string>();
+            SubjectsChosenList = dataSets?.Elements("subjectsChosen").Select(e => e.Value).ToList() ?? [];
             HobbiesChosen = dataSets?.Element("hobbiesChosen")?.Value;
             CurrentAddress = dataSets?.Element("currentAddress")?.Value;
+            StateChosen = dataSets?.Element("stateChosen")?.Value;
+            CityChosen = dataSets?.Element("cityChosen")?.Value;
         }
 
         private void LoadDataSets(int dataSetNumber)
@@ -37,13 +39,11 @@ namespace Automation.Access
             dataSets = doc.Root?.Element(setName);
             if (dataSets == null)
             {
+                Console.WriteLine($"Looking for {dataSets}");
                 throw new Exception($"Data node '{setName}' not found in the XML file.");
             }
-        }
 
-        private string GetDataValue(string setName)
-        {
-            return dataSets?.Element(setName)?.Value ?? throw new Exception($"Node '{setName}' not found in the data set.");
+            Console.WriteLine($"Using <dataSet_{dataSetNumber}> values!");
         }
     }
 }

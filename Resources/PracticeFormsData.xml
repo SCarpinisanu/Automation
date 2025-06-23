@@ -1,39 +1,67 @@
 ﻿<dataSets>
 	<dataSet_1>
-		//Valid data set
+		//Valid data set with all fields filled in, but State and City not in the list
 		<firstName>Sorin</firstName>
-		<lastName>Popescu</lastName>
-		<userEmail>Sorin.Popescu@gmail.com</userEmail>
+		<lastName>Carpinisanu</lastName>
+		<userEmail>Sorin.Carpinisanu@gmail.com</userEmail>
 		<genderChosen>Male</genderChosen>
 		<userNumber>0770115330</userNumber>
-		<monthPick>05</monthPick>
-		<yearPick>1992</yearPick>
-		<dayPick>25</dayPick>
+		<monthPick>2</monthPick>
+		<yearPick>1967</yearPick>
+		<dayPick>6</dayPick>
 		<subjectsChosen>Maths</subjectsChosen>
 		<subjectsChosen>Physics</subjectsChosen>
-		<hobbiesChosen>Music, Sports</hobbiesChosen>
-		<currentAddress>Strada Maternitatii 13, Pitesti</currentAddress>
+		<hobbiesChosen>Reading, Sports</hobbiesChosen>
+		<currentAddress>Aleea Papucesti 8, bl. 55B, sc. C, et. 2, ap. 10, Pitesti, Arges</currentAddress>
+		<stateChosen>Haryana</stateChosen>
+		<cityChosen>Panipat</cityChosen>
 	</dataSet_1>
 	<dataSet_2> 
-		//Month value is not between 1 and 12
+		//No values for month, year and day
 		<firstName>Maria</firstName>
 		<lastName>Magdalena</lastName>
 		<userEmail>tt.gg@gmail.com</userEmail>
 		<genderChosen>Mamifer</genderChosen>
-		<userNumber>0770115330</userNumber>
-		<monthPick>13</monthPick>
-		<yearPick>1974</yearPick>
-		<dayPick>10</dayPick>
+		<userNumber>0770190830</userNumber>
+		<monthPick></monthPick>
+		<yearPick></yearPick>
+		<dayPick></dayPick>
 		<subjectsChosen>Maths</subjectsChosen>
 		<subjectsChosen>Physics</subjectsChosen>
 		<hobbiesChosen>Reading, Sports</hobbiesChosen>
-		<currentAddress>Strada Maternitatii 13, Pitesti</currentAddress>
+		<currentAddress>Aleea Papucesti 8, Pitesti</currentAddress>
 	</dataSet_2>
 	<dataSet_3>
-		//Minimum data set
+		//Minimum data set and no gender value and State NCR, wrong city
 		<firstName>John</firstName>
 		<lastName>Doe</lastName>
 		<genderChosen></genderChosen>
 		<userNumber>0775236258</userNumber>
+		<stateChosen>NCR</stateChosen>
+		<cityChosen>Pitesti</cityChosen>
 	</dataSet_3>
+	<dataSet_4>
+		//Month value is not between 1 and 12, year is in the future
+		<firstName>Filimon</firstName>
+		<lastName>Protopopescu</lastName>
+		<userEmail>first.last@gmail.com</userEmail>
+		<genderChosen>Mmale</genderChosen>
+		<userNumber>077255678</userNumber>
+		<monthPick>24</monthPick>
+		<yearPick>2035</yearPick>
+		<dayPick>30</dayPick>
+		<subjectsChosen>Maths</subjectsChosen>
+		<subjectsChosen>Physics</subjectsChosen>
+		<hobbiesChosen>Reading, Sports</hobbiesChosen>
+		<currentAddress>Strada Republicii 164, Pitesti, Arges</currentAddress>
+	</dataSet_4>
+	<dataSet_5>
+		//State and Cuty no values
+		<firstName>John</firstName>
+		<lastName>Doe</lastName>
+		<genderChosen></genderChosen>
+		<userNumber>0775236258</userNumber>
+		<stateChosen></stateChosen>
+		<cityChosen></cityChosen>
+	</dataSet_5>
 </dataSets>

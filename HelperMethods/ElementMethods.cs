@@ -9,21 +9,16 @@ using OpenQA.Selenium.Support.UI;
 
 namespace Automation.HelperMethods
 {
-    public class ElementMethods
+    public class ElementMethods(IWebDriver driver)
     {
-        private readonly IWebDriver _driver;
+        private readonly IWebDriver _driver = driver ?? throw new ArgumentNullException(nameof(driver));
 
-        public ElementMethods(IWebDriver driver)
-        {
-            _driver = driver ?? throw new ArgumentNullException(nameof(driver));
-        }
-
-        public void ClickOnElement(IWebElement element)
+        public static void ClickOnElement(IWebElement element)
         {
             element.Click();
         }
 
-        public void FillElement(IWebElement element, string text)
+        public static void FillElement(IWebElement element, string text)
         {
             element.SendKeys(text);
         }

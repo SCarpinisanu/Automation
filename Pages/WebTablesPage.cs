@@ -26,7 +26,7 @@ namespace Automation.Pages
 
         public void ClickAddNewRecordButton()
         {
-            elementMethods.ClickOnElement(AddNewRecordButton);
+            ElementMethods.ClickOnElement(AddNewRecordButton);
         }
 
         IWebElement FirstName => webWebDriver.FindElement(By.Id("firstName"));
@@ -38,22 +38,22 @@ namespace Automation.Pages
 
         public void FillFields(string firstName, string lastName, string email, string age, string salary, string department)
         {
-            elementMethods.FillElement(FirstName, firstName);
-            elementMethods.FillElement(LastName, lastName);
-            elementMethods.FillElement(Email, email);
-            elementMethods.FillElement(Age, age);
-            elementMethods.FillElement(Salary, salary);
-            elementMethods.FillElement(Department, department);
+            ElementMethods.FillElement(FirstName, firstName);
+            ElementMethods.FillElement(LastName, lastName);
+            ElementMethods.FillElement(Email, email);
+            ElementMethods.FillElement(Age, age);
+            ElementMethods.FillElement(Salary, salary);
+            ElementMethods.FillElement(Department, department);
         }
 
         public void FillFieldsXML(WebTablesData webTablesData)
         {
-            elementMethods.FillElement(FirstName, webTablesData.FirstName!);
-            elementMethods.FillElement(LastName, webTablesData.LastName!);
-            elementMethods.FillElement(Email, webTablesData.UserEmail!);
-            elementMethods.FillElement(Age, webTablesData.Age!);
-            elementMethods.FillElement(Salary, webTablesData.Salary!);
-            elementMethods.FillElement(Department, webTablesData.Department!);
+            ElementMethods.FillElement(FirstName, webTablesData.FirstName!);
+            ElementMethods.FillElement(LastName, webTablesData.LastName!);
+            ElementMethods.FillElement(Email, webTablesData.UserEmail!);
+            ElementMethods.FillElement(Age, webTablesData.Age!);
+            ElementMethods.FillElement(Salary, webTablesData.Salary!);
+            ElementMethods.FillElement(Department, webTablesData.Department!);
         }
 
         private IWebElement SubmitButton => webWebDriver.FindElement(By.Id("submit"));

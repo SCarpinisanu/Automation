@@ -30,23 +30,23 @@ namespace Automation.Pages
 
         public void ClickAlertButton()
         {
-            elementMethods.ClickOnElement(AlertButton);
+            ElementMethods.ClickOnElement(AlertButton);
             Console.WriteLine("Clicked on alertButton");
         }
 
         public void ClickTimerAlertButton()
         {
-            elementMethods.ClickOnElement(TimerAlertButton);
+            ElementMethods.ClickOnElement(TimerAlertButton);
             Console.WriteLine("Clicked on timerAlertButton");
         }
         public void ClickConfirmButton()
         {
-            elementMethods.ClickOnElement(ConfirmButton);
+            ElementMethods.ClickOnElement(ConfirmButton);
             Console.WriteLine("Clicked on confirmButton");
         }
         public void ClickPromptButton()
         {
-            elementMethods.ClickOnElement(PromptButton);
+            ElementMethods.ClickOnElement(PromptButton);
             Console.WriteLine("Clicked on promtButton");
         }
 

@@ -32,11 +32,11 @@ namespace Automation.Pages
 
         public void CompleteFirstRegion(string firstName, string lastName, string userEmail, string userNumber, string currentAddress)
         {
-            this.elementMethods.FillElement(FirstNameElement, firstName);
-            this.elementMethods.FillElement(LastNameElement, lastName);
-            this.elementMethods.FillElement(UserEmailElement, userEmail);
-            this.elementMethods.FillElement(UserNumberElement, userNumber);
-            this.elementMethods.FillElement(CurrentAddressElement, currentAddress);
+            ElementMethods.FillElement(FirstNameElement, firstName);
+            ElementMethods.FillElement(LastNameElement, lastName);
+            ElementMethods.FillElement(UserEmailElement, userEmail);
+            ElementMethods.FillElement(UserNumberElement, userNumber);
+            ElementMethods.FillElement(CurrentAddressElement, currentAddress);
 
         }
 
@@ -46,22 +46,22 @@ namespace Automation.Pages
             {
                 Console.WriteLine("First Name is mandatory but is missing - using 'Ion'");
                 practiceFormsData.FirstName = "Ion"; // Default value
-                this.elementMethods.FillElement(FirstNameElement, practiceFormsData.FirstName!);
+                ElementMethods.FillElement(FirstNameElement, practiceFormsData.FirstName!);
             }
             else
             {
-                this.elementMethods.FillElement(FirstNameElement, practiceFormsData.FirstName!);
+                ElementMethods.FillElement(FirstNameElement, practiceFormsData.FirstName!);
             }
 
             if (string.IsNullOrWhiteSpace(practiceFormsData.LastName))
             {
                 Console.WriteLine("Last Name is mandatory but is missing - using 'Popescu'");
                 practiceFormsData.LastName = "Popescu"; // Default value
-                this.elementMethods.FillElement(LastNameElement, practiceFormsData.LastName!);
+                ElementMethods.FillElement(LastNameElement, practiceFormsData.LastName!);
             }
             else
             {
-                this.elementMethods.FillElement(LastNameElement, practiceFormsData.LastName!);
+                ElementMethods.FillElement(LastNameElement, practiceFormsData.LastName!);
             }
 
             if (string.IsNullOrWhiteSpace(practiceFormsData.UserEmail))
@@ -70,18 +70,18 @@ namespace Automation.Pages
             }
             else
             {
-                this.elementMethods.FillElement(UserEmailElement, practiceFormsData.UserEmail!);
+                ElementMethods.FillElement(UserEmailElement, practiceFormsData.UserEmail!);
             }
 
             if (string.IsNullOrWhiteSpace(practiceFormsData.UserNumber))
             {
                 Console.WriteLine("User number is mandatory - using 1234567890.");
                 practiceFormsData.UserNumber = "1234567890"; // Default value
-                this.elementMethods.FillElement(UserNumberElement, practiceFormsData.UserNumber!);
+                ElementMethods.FillElement(UserNumberElement, practiceFormsData.UserNumber!);
             }
             else 
             {
-                this.elementMethods.FillElement(UserNumberElement, practiceFormsData.UserNumber!);
+                ElementMethods.FillElement(UserNumberElement, practiceFormsData.UserNumber!);
             }
 
             this.ChooseGender(practiceFormsData.GenderChosen);
@@ -120,8 +120,17 @@ namespace Automation.Pages
             }
             else
             {
-                this.elementMethods.FillElement(CurrentAddressElement, practiceFormsData.CurrentAddress!);
+                ElementMethods.FillElement(CurrentAddressElement, practiceFormsData.CurrentAddress!);
             }
+
+            //if (string.IsNullOrWhiteSpace(practiceFormsData.StateChosen) || string.IsNullOrWhiteSpace(practiceFormsData.CityChosen))
+            //{
+            //    Console.WriteLine("State or City is empty or null, skipping state and city selection.");
+            //}
+            //else
+            //{
+            this.SelectStateAndCity(practiceFormsData);
+            //}
         }
 
         public void SelectDOB(string monthPick, string yearPick, string dayPick)
@@ -131,14 +140,54 @@ namespace Automation.Pages
 
             var selectMonthList = webDriver.FindElement(By.ClassName("react-datepicker__month-select"));
             var selectMonth = new SelectElement(selectMonthList);
-            selectMonth.SelectByText(monthPick);
+            if (int.TryParse(monthPick, out int monthNumber) && monthNumber >= 1 && monthNumber <= 12)
+            {
+                Console.WriteLine("Value of month from xml file is valid: " + monthNumber);
+                selectMonth.SelectByText(monthPick);
+            }
+            else
+            {
+                Console.WriteLine("Value of month from xml file is invalid: " + monthPick);
+                Console.WriteLine("Using default value of '01' (January)");
+                selectMonth.SelectByText("01"); // Default to January if invalid month
+            }
 
             var selectYearList = webDriver.FindElement(By.ClassName("react-datepicker__year-select"));
             var selectYear = new SelectElement(selectYearList);
+            if (int.TryParse(yearPick, out int yearNumber) && yearNumber >= 1900 && yearNumber <= DateTime.Now.Year)
+            {
+                Console.WriteLine("Value of year from xml file is valid: " + yearNumber);
+            }
+            else
+            {
+                Console.WriteLine("Value of year from xml file is invalid: " + yearPick);
+                Console.WriteLine("Using default value of current year: " + DateTime.Now.Year);
+                yearPick = DateTime.Now.Year.ToString(); // Default to current year if invalid
+            }
             selectYear.SelectByText(yearPick); // <-- Corrected line
 
-            var dayOfBirthSelect = webDriver.FindElement(By.CssSelector($"div.react-datepicker__day--0{dayPick}:not(.react-datepicker__day--outside-month)"));
-            dayOfBirthSelect.Click();
+            if (int.TryParse(yearPick, out int year) &&
+                int.TryParse(monthPick, out int month) &&
+                int.TryParse(dayPick, out int day))
+            {
+                try
+                {
+                    DateTime date = new(year, month, day);
+                    Console.WriteLine($"Data este validă: {date.ToShortDateString()}");
+                    // If the date is valid, you can proceed with further actions
+                    var dayOfBirthSelect = webDriver.FindElement(By.CssSelector($"div.react-datepicker__day--0{dayPick}:not(.react-datepicker__day--outside-month)"));
+                    dayOfBirthSelect.Click();
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    Console.WriteLine("Data NU este validă!");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Valori numerice invalide!");
+            }
+            
         }
 
         public void DateOfBirth(PracticeFormsData practiceFormsData)
@@ -149,16 +198,48 @@ namespace Automation.Pages
 
             // Select year
             var yearSelect = new SelectElement(webDriver.FindElement(By.CssSelector(".react-datepicker__year-select")));
+            if (practiceFormsData.YearPick == null || !int.TryParse(practiceFormsData.YearPick, out int year) || year < 1900 || year > DateTime.Now.Year)
+            {
+                Console.WriteLine("Year is invalid or not provided - using current year as default.");
+                practiceFormsData.YearPick = DateTime.Now.Year.ToString();
+            }
             yearSelect.SelectByValue(practiceFormsData.YearPick!);
 
             // Select month (0-based index)
             var monthSelect = new SelectElement(webDriver.FindElement(By.CssSelector(".react-datepicker__month-select")));
+            if (practiceFormsData.MonthPick == null || !int.TryParse(practiceFormsData.MonthPick, out int month) || month < 1 || month > 12)
+            {
+                Console.WriteLine("Month is invalid or not provided - using January as default.");
+                practiceFormsData.MonthPick = "01"; // Default to January
+            }
             monthSelect.SelectByValue((int.Parse(practiceFormsData.MonthPick!) - 1).ToString());
 
             // Select day
-            string daySelector = $".react-datepicker__day--0{int.Parse(practiceFormsData.DayPick!):D2}:not(.react-datepicker__day--outside-month)";
-            var dayElement = webDriver.FindElement(By.CssSelector(daySelector));
-            dayElement.Click();
+            if (practiceFormsData.DayPick == null || !int.TryParse(practiceFormsData.DayPick, out int day) || day < 1 || day > 31)
+            {
+                Console.WriteLine("Day is invalid or not provided - using 1 as default.");
+                practiceFormsData.DayPick = "01"; // Default to 1st
+            }
+            else
+            {
+                if (int.TryParse(practiceFormsData.YearPick, out int yearPractice) &&
+                    int.TryParse(practiceFormsData.MonthPick, out int monthPractice) &&
+                    int.TryParse(practiceFormsData.DayPick, out int dayPractice))
+                {
+                    try
+                    {
+                        DateTime date = new(yearPractice, monthPractice, dayPractice);
+                        Console.WriteLine($"Data este validă: {date.ToShortDateString()}");
+                        string daySelector = $".react-datepicker__day--0{int.Parse(practiceFormsData.DayPick!):D2}:not(.react-datepicker__day--outside-month)";
+                        var dayElement = webDriver.FindElement(By.CssSelector(daySelector));
+                        dayElement.Click();
+                    }
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        Console.WriteLine("Data NU este validă!");
+                    }
+                }
+            }
         }
 
         IWebElement SubjectsInput => webDriver.FindElement(By.Id("subjectsInput"));
@@ -174,10 +255,10 @@ namespace Automation.Pages
             }
             foreach (var subject in practiceFormsData.SubjectsChosenList)
             {
-                elementMethods.FillElement(SubjectsInput, subject);
+                ElementMethods.FillElement(SubjectsInput, subject);
                 //elementMethods.ScrollPageToElement(SubjectsInput);
                 var subjectOption = webDriver.FindElement(By.XPath($"//div[contains(@class, 'subjects-auto-complete__option') and text()='{subject}']"));
-                elementMethods.ClickOnElement(subjectOption);
+                ElementMethods.ClickOnElement(subjectOption);
             }
         }
 
@@ -190,14 +271,14 @@ namespace Automation.Pages
             switch (genderChosen)
             {
                 case "Male":
-                    elementMethods.ClickOnElement(genderMale);
+                    ElementMethods.ClickOnElement(genderMale);
                     break;
                 case "Female":
-                    elementMethods.ClickOnElement(genderFemale);
+                    ElementMethods.ClickOnElement(genderFemale);
                     break;
                 default:
                     Console.WriteLine("No gender was selected or wrong text - using default 'Other'!!!");
-                    elementMethods.ClickOnElement(genderOther);
+                    ElementMethods.ClickOnElement(genderOther);
                     break;
             }
         }
@@ -214,7 +295,7 @@ namespace Automation.Pages
                 if (hobby == "Sports" || hobby == "Reading" || hobby == "Music")
                 {
                     var label = webDriver.FindElement(By.XPath($"//label[text()='{hobby}']"));
-                    elementMethods.ClickOnElement(label);
+                    ElementMethods.ClickOnElement(label);
                 }
                 else
                 {
@@ -243,11 +324,75 @@ namespace Automation.Pages
                 try
                 {
                     var label = webDriver.FindElement(By.XPath($"//label[text()='{hobby}']"));
-                    elementMethods.ClickOnElement(label);
+                    ElementMethods.ClickOnElement(label);
                 }
                 catch (NoSuchElementException)
                 {
                     Console.WriteLine($"The hobby named {hobby} is not in the list");
+                }
+            }
+        }
+
+        IWebElement SelectState => webDriver.FindElement(By.Id("state"));
+        public void SelectStateAndCity(PracticeFormsData practiceFormsData)
+        {
+            // Scroll to the state dropdown
+            ((IJavaScriptExecutor)webDriver).ExecuteScript("arguments[0].scrollIntoView(true);", SelectState);
+
+            // Select State
+            var stateDropdown = webDriver.FindElement(By.Id("state"));
+            stateDropdown.Click();
+
+            if (string.IsNullOrWhiteSpace(practiceFormsData.StateChosen))
+            {
+                Console.WriteLine("State is empty or null, skipping state selection.");
+                Console.WriteLine("No City selection available.");
+                return;
+            }
+            else
+            {
+                var stateOptions = webDriver.FindElements(By.XPath($"//div[contains(@id, 'react-select') and text()='{practiceFormsData.StateChosen}']"));
+                if (stateOptions.Count == 0)
+                {
+                    Console.WriteLine($"State '{practiceFormsData.StateChosen}' not found in the dropdown.");
+                    Console.WriteLine("Skipping state and city selection.");
+                    return;
+                }
+                else 
+                {
+                    var stateWait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(5)); // Renamed 'wait' to 'stateWait'
+                    stateWait.Until(d => d.FindElement(By.XPath($"//div[contains(@id, 'react-select') and text()='{practiceFormsData.StateChosen}']")));
+
+                    var stateOption = webDriver.FindElement(By.XPath($"//div[contains(@id, 'react-select') and text()='{practiceFormsData.StateChosen}']"));
+                    stateOption.Click();
+
+                    // Așteaptă actualizarea dropdownului pentru city
+                    var cityDropdown = webDriver.FindElement(By.Id("city"));
+                    cityDropdown.Click();
+
+                    if (string.IsNullOrWhiteSpace(practiceFormsData.CityChosen))
+                    {
+                        Console.WriteLine("City is empty or null, skipping state and city selection.");
+                        return;
+                    }
+                    else
+                    {                        
+                        var cityOptions = webDriver.FindElements(By.XPath($"//div[contains(@id, 'react-select') and text()='{practiceFormsData.CityChosen}']"));
+                        if (cityOptions.Count == 0)
+                        {
+                            Console.WriteLine($"City '{practiceFormsData.CityChosen}' not found in the dropdown.");
+                            Console.WriteLine("Skipping state and city selection");
+                            return;
+                        }
+                        else
+                        {
+                            var cityWait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(5)); // Renamed 'wait' to 'cityWait'
+                            cityWait.Until(d => d.FindElement(By.XPath($"//div[contains(@id, 'react-select') and text()='{practiceFormsData.CityChosen}']")));
+
+                            var cityOption = webDriver.FindElement(By.XPath($"//div[contains(@id, 'react-select') and text()='{practiceFormsData.CityChosen}']"));
+                            cityOption.Click();
+                        }
+                    }
                 }
             }
         }

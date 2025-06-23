@@ -29,7 +29,7 @@ namespace Automation.Pages
         {
             js.ExecuteScript("window.scrollTo(0, 1000)");
             elementMethods.SelectElementFromListByText(elements, menuName);
-            Console.WriteLine(menuName);
+            //Console.WriteLine(menuName);
         }
 
 

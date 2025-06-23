@@ -35,7 +35,7 @@ namespace Automation.Pages
             else
             {
                 var h5Element = elementsInHomePage[indexOfElement].FindElement(By.TagName("h5"));
-                Console.WriteLine(h5Element.Text);
+                //Console.WriteLine(h5Element.Text);
 
                 var element = elementsInHomePage[indexOfElement];
 
