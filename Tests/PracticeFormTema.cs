@@ -22,7 +22,7 @@ namespace Automation.Tests
             elementMethods = new ElementMethods(webDriver!);
             practiceFormsPage = new PracticeFormPage(webDriver!);
 
-            PracticeFormsData practiceFormsData = new PracticeFormsData(3);
+            PracticeFormsData practiceFormsData = new(3);
 
             homePage.ClickOnOption(1);
             commonPage.GoToDesiredMenuItem("Practice Form");

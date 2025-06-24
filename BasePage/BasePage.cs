@@ -2,6 +2,7 @@ using Automation.Access;
 using Automation.BasePage.Browser;
 using Automation.HelperMethods;
 using Automation.Pages;
+using Automation.Pages.PracticeForm;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -24,6 +25,7 @@ namespace Automation.BasePage
         public AlertsPage? alertsPage;
         public WebTablesData? webTablesData;
         public PracticeFormsData? practiceFormsData;
+        public PracticeForm? practiceForm;
 
         [SetUp]
         public void SetUp()

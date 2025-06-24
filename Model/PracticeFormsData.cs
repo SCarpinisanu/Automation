@@ -17,7 +17,7 @@ namespace Automation.Access
         public string? YearPick { get; set; } = null;
         public string? DayPick { get; set; } = null;
         //public string? SubjectsChosen { get; set; }
-        public List<string> SubjectsChosenList { get; private set; } = new List<string>();
+        public List<string> SubjectsChosenList { get; private set; } = [];
         public string? HobbiesChosen { get; set; } = null;
         public string? CurrentAddress { get; set; } = null;
         public string? StateChosen { get; set; } = null;

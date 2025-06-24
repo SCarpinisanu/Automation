@@ -413,5 +413,10 @@ namespace Automation.Pages
             var closeButton = webDriver.FindElement(By.Id("closeLargeModal"));
             closeButton.Click();
         }
+
+        public static implicit operator PracticeFormPage(PracticeForm.PracticeForm v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

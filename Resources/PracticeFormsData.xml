@@ -1,6 +1,6 @@
 ﻿<dataSets>
 	<dataSet_1>
-		//Valid data set with all fields filled in, but State and City not in the list
+		//Valid data set with all fields
 		<firstName>Sorin</firstName>
 		<lastName>Carpinisanu</lastName>
 		<userEmail>Sorin.Carpinisanu@gmail.com</userEmail>
@@ -64,4 +64,10 @@
 		<stateChosen></stateChosen>
 		<cityChosen></cityChosen>
 	</dataSet_5>
+	<dataSet_6>
+		<genderChosen>Male</genderChosen>
+		<subjectsChosen>Physics</subjectsChosen>
+		<subjectsChosen>English</subjectsChosen>
+		<subjectsChosen>Commerce</subjectsChosen>
+	</dataSet_6>
 </dataSets>
