@@ -33,17 +33,17 @@ namespace Automation.Pages.PracticeForm
                     int.TryParse(practiceFormsData.MonthPick, out int monthPractice) &&
                     int.TryParse(practiceFormsData.DayPick, out int dayPractice))
                 {
-                        DateTime date = new(yearPractice, monthPractice, dayPractice);
-                        Console.WriteLine($"Data este validă: {date.ToShortDateString()}");
-                        string daySelector = $".react-datepicker__day--0{int.Parse(practiceFormsData.DayPick!):D2}:not(.react-datepicker__day--outside-month)";
-                        var dayElement = webDriver.FindElement(By.CssSelector(daySelector));
-                        dayElement.Click();
+                    DateTime date = new(yearPractice, monthPractice, dayPractice);
+                    Console.WriteLine($"Data este validă: {date.ToShortDateString()}");
+                    string daySelector = $".react-datepicker__day--0{int.Parse(practiceFormsData.DayPick!):D2}:not(.react-datepicker__day--outside-month)";
+                    var dayElement = webDriver.FindElement(By.CssSelector(daySelector));
+                    dayElement.Click();
                 }
             }
             else
             {
                 // The date is invalid
-                Console.WriteLine("Data NU este validă!");
+                Console.WriteLine($"The date is NOT valid! ({practiceFormsData.DayPick}.{practiceFormsData.MonthPick}.{practiceFormsData.YearPick}) Using today date.");
             }
         }
 

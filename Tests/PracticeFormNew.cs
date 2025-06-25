@@ -26,9 +26,11 @@ namespace Automation.Tests
             ChooseGender chooseGender = new(webDriver!);
             //DateOfBirth dateOfBirth = new(webDriver!);
             DateOfBirth2 dateOfBirth2 = new(webDriver!);
-            Pages.PracticeForm.Submit submitClick = new(webDriver!);
-            Pages.PracticeForm.CloseModalPage closeModal = new(webDriver!);
-            Pages.PracticeForm.InputSubjects inputSubjects = new(webDriver!);
+            Submit submitClick = new(webDriver!);
+            CloseModalPage closeModal = new(webDriver!);
+            InputSubjects inputSubjects = new(webDriver!);
+            CurrentAddress currentAddress = new(webDriver!);
+            StateAndCity stateAndCity = new(webDriver!);
 
             PracticeFormsData practiceFormsData = new(1);
 
@@ -40,8 +42,11 @@ namespace Automation.Tests
 
             inputSubjects.FillSubjects(practiceFormsData); 
             
-            //dateOfBirth.SelectDateOfBirth(practiceFormsData);
             dateOfBirth2.SelectDOB(practiceFormsData);
+
+            currentAddress.FillCurrentAddress(practiceFormsData);
+
+            stateAndCity.SelectStateAndCity(practiceFormsData);
 
             submitClick.SubmitAction();
 

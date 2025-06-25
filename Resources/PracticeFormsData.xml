@@ -10,6 +10,7 @@
 		<yearPick>1967</yearPick>
 		<dayPick>6</dayPick>
 		<subjectsChosen>Maths</subjectsChosen>
+		<subjectsChosen>Commerce</subjectsChosen>
 		<subjectsChosen>Physics</subjectsChosen>
 		<hobbiesChosen>Reading, Sports</hobbiesChosen>
 		<currentAddress>Aleea Papucesti 8, bl. 55B, sc. C, et. 2, ap. 10, Pitesti, Arges</currentAddress>
@@ -17,7 +18,7 @@
 		<cityChosen>Panipat</cityChosen>
 	</dataSet_1>
 	<dataSet_2> 
-		//No values for month, year and day
+		//No values for month, year and day, gender value is not valid
 		<firstName>Maria</firstName>
 		<lastName>Magdalena</lastName>
 		<userEmail>tt.gg@gmail.com</userEmail>
@@ -32,9 +33,9 @@
 		<currentAddress>Aleea Papucesti 8, Pitesti</currentAddress>
 	</dataSet_2>
 	<dataSet_3>
-		//Minimum data set and no gender value and State NCR, wrong city
-		<firstName>John</firstName>
-		<lastName>Doe</lastName>
+		//Minimum data set, no gender value, valid state NCR, wrong city
+		<firstName>Catalina</firstName>
+		<lastName>Dobre</lastName>
 		<genderChosen></genderChosen>
 		<userNumber>0775236258</userNumber>
 		<stateChosen>NCR</stateChosen>
@@ -56,7 +57,7 @@
 		<currentAddress>Strada Republicii 164, Pitesti, Arges</currentAddress>
 	</dataSet_4>
 	<dataSet_5>
-		//State and Cuty no values
+		//State and City no values
 		<firstName>John</firstName>
 		<lastName>Doe</lastName>
 		<genderChosen></genderChosen>
@@ -70,4 +71,16 @@
 		<subjectsChosen>English</subjectsChosen>
 		<subjectsChosen>Commerce</subjectsChosen>
 	</dataSet_6>
+	<dataSet_7>
+		//Valid data set with leap year date
+		<monthPick>2</monthPick>
+		<yearPick>1996</yearPick>
+		<dayPick>29</dayPick>
+	</dataSet_7>
+	<dataSet_8>
+		//Invalid data set with leap year date
+		<monthPick>2</monthPick>
+		<yearPick>1994</yearPick>
+		<dayPick>29</dayPick>
+	</dataSet_8>
 </dataSets>
