@@ -149,7 +149,7 @@ namespace Automation.Pages
             {
                 Console.WriteLine("Value of month from xml file is invalid: " + monthPick);
                 Console.WriteLine("Using default value of '01' (January)");
-                selectMonth.SelectByText("01"); // Default to January if invalid month
+                selectMonth.SelectByText("January"); // Default to January if invalid month
             }
 
             var selectYearList = webDriver.FindElement(By.ClassName("react-datepicker__year-select"));
