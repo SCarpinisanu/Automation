@@ -9,18 +9,13 @@ using System.Threading.Tasks;
 
 namespace Automation.Pages.PracticeForm
 {
-    public class PracticeForm
+    public class PracticeForm(IWebDriver webDriver)
     {
-        public IWebDriver WebDriver { get; }
+        public IWebDriver WebDriver { get; } = webDriver ?? throw new ArgumentNullException(nameof(webDriver));
 
         public CompleteFirstRegion? completeFirstRegion;
         public ChooseGender? chooseGender;
         public DateOfBirth? dateOfBirth;
-
-        public PracticeForm(IWebDriver webDriver)
-        {
-            WebDriver = webDriver ?? throw new ArgumentNullException(nameof(webDriver));
-        }
 
         public void FillFirstFields(PracticeFormsData practiceFormsData)
         {

@@ -11,18 +11,11 @@ using OpenQA.Selenium.Support.UI;
 
 namespace Automation.Pages
 {
-    public class ModalDialogsPage
+    public class ModalDialogsPage(IWebDriver webDriver)
     {
-        public IWebDriver webDriver;
-        public ElementMethods elementMethods;
-        private readonly WebDriverWait wait;
-
-        public ModalDialogsPage(IWebDriver webDriver)
-        {
-            this.webDriver = webDriver;
-            elementMethods = new ElementMethods(webDriver);
-            this.wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(10));
-        }
+        public IWebDriver webDriver = webDriver;
+        public ElementMethods elementMethods = new ElementMethods(webDriver);
+        private readonly WebDriverWait wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(10));
 
         public (int smallModalWord, int smallModalPunctuation) HandleSmallModal()
         {

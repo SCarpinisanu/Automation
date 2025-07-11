@@ -3,6 +3,7 @@ using Automation.BasePage.Browser;
 using Automation.HelperMethods;
 using Automation.Pages;
 using Automation.Pages.PracticeForm;
+using Automation.Tests;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -26,6 +27,7 @@ namespace Automation.BasePage
         public WebTablesData? webTablesData;
         public PracticeFormsData? practiceFormsData;
         public PracticeForm? practiceForm;
+        public WebTablesPageDDT? webTablesPageDDT;
 
         [SetUp]
         public void SetUp()

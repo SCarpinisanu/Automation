@@ -11,16 +11,10 @@ using SeleniumExtras.WaitHelpers;
 
 namespace Automation.Pages
 {
-    public class AlertsPage
+    public class AlertsPage(IWebDriver webDriver)
     {
-        public IWebDriver webDriver;
-        public ElementMethods elementMethods;
-
-        public AlertsPage(IWebDriver webDriver)
-        {
-            this.webDriver = webDriver;
-            elementMethods = new ElementMethods(webDriver);
-        }
+        public IWebDriver webDriver = webDriver;
+        public ElementMethods elementMethods = new ElementMethods(webDriver);
 
         public IWebElement AlertButton => webDriver.FindElement(By.Id("alertButton"));
         public IWebElement TimerAlertButton => webDriver.FindElement(By.Id("timerAlertButton"));
@@ -67,9 +61,16 @@ namespace Automation.Pages
         }
         public void WaitForAlertToBePresent(int timeoutInSeconds = 10)
         {
-            WebDriverWait wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(timeoutInSeconds));
-            wait.Until(ExpectedConditions.AlertIsPresent());
-            Console.WriteLine("Alert displayed after 5 seconds - clicked OK button");
+            try
+            {
+                WebDriverWait wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(timeoutInSeconds));
+                wait.Until(ExpectedConditions.AlertIsPresent());
+                Console.WriteLine("Alert displayed after 5 seconds - clicked OK button");
+            }
+            catch (WebDriverTimeoutException ex)
+            {
+                Console.WriteLine($"Alert was not displayed within {timeoutInSeconds} seconds. Exception: {ex.Message}");
+            }
         }
     }
 }

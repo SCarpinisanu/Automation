@@ -11,16 +11,10 @@ using OpenQA.Selenium.Support.UI;
 
 namespace Automation.Pages
 {
-    public class WebTablesPage
+    public class WebTablesPage(IWebDriver webWebDriver)
     {
-        public IWebDriver webWebDriver;
-        public ElementMethods elementMethods;
-
-        public WebTablesPage(IWebDriver webWebDriver)
-        {
-            this.webWebDriver = webWebDriver;
-            elementMethods = new ElementMethods(webWebDriver);
-        }
+        public IWebDriver webWebDriver = webWebDriver;
+        public ElementMethods elementMethods = new(webWebDriver);
 
         IWebElement AddNewRecordButton => webWebDriver.FindElement(By.Id("addNewRecordButton"));
 
@@ -81,6 +75,11 @@ namespace Automation.Pages
                 }
             }
             return false;
+        }
+
+        public void SwitchToFrame(string frameIdOrName)
+        {
+            webWebDriver.SwitchTo().Frame(frameIdOrName);
         }
     }
 }

@@ -8,20 +8,12 @@ using OpenQA.Selenium;
 
 namespace Automation.Pages
 {
-    public class FramesPage
+    public class FramesPage(IWebDriver webDriver)
     {
-        public IWebDriver webDriver;
-        private readonly ElementMethods elementMethods;
-        private readonly JavaScriptMethods javaScriptMethods;
-        private IJavaScriptExecutor js;
-
-        public FramesPage(IWebDriver webDriver)
-        {
-            this.webDriver = webDriver;
-            elementMethods = new ElementMethods(webDriver);
-            javaScriptMethods = new JavaScriptMethods(webDriver);
-            js = (IJavaScriptExecutor)webDriver;
-        }
+        public IWebDriver webDriver = webDriver;
+        private readonly ElementMethods elementMethods = new ElementMethods(webDriver);
+        private readonly JavaScriptMethods javaScriptMethods = new JavaScriptMethods(webDriver);
+        private IJavaScriptExecutor js = (IJavaScriptExecutor)webDriver;
 
         IWebElement frame1 => webDriver.FindElement(By.Id("frame1"));
         IWebElement frame2 => webDriver.FindElement(By.Id("frame2"));

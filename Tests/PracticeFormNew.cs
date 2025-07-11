@@ -50,11 +50,30 @@ namespace Automation.Tests
 
             submitClick.SubmitAction();
 
-            var wait = new OpenQA.Selenium.Support.UI.WebDriverWait(webDriver!, TimeSpan.FromSeconds(5));
-            var modalTitle = wait.Until(driver =>
-                driver.FindElement(By.CssSelector("div.modal-title.h4#example-modal-sizes-title-lg")));
-            Thread.Sleep(1000); // Optional: Wait for the modal to fully render  
-            Assert.That(modalTitle.Text, Is.EqualTo("Thanks for submitting the form"));
+            try
+            {
+                var wait = new OpenQA.Selenium.Support.UI.WebDriverWait(webDriver!, TimeSpan.FromSeconds(5));
+                var modalTitle = wait.Until(driver =>
+                    driver.FindElement(By.CssSelector("div.modal-title.h4#example-modal-sizes-title-lg")));
+                Thread.Sleep(1000); // Optional: Wait for the modal to fully render  
+                Assert.That(modalTitle.Text, Is.EqualTo("Thanks for submitting the form"));
+            }
+            catch (WebDriverTimeoutException ex)
+            {
+                Assert.Fail($"Modal did not appear within the expected time: {ex.Message}");
+            }
+            catch (NoSuchElementException ex)
+            {
+                Assert.Fail($"Modal title element not found: {ex.Message}");
+            }
+            catch (AssertionException ex)
+            {
+                Assert.Fail($"Assertion failed: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex.Message}");
+            }
 
             closeModal.CloseModal();
         }
