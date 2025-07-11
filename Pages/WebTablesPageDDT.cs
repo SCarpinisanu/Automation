@@ -1,4 +1,4 @@
-using Automation.Access;
+﻿using Automation.Access;
 using OpenQA.Selenium;
 using Automation.HelperMethods;
 
@@ -43,24 +43,20 @@ namespace Automation.Pages
             ButtonSubmit.Click();
         }
 
-        public bool IsRecordDisplayed(WebTablesData webTablesData)
+        public string[] GetRowDataByEmail(string targetEmail)
         {
             var rows = webDriver.FindElements(By.CssSelector(".rt-tr-group"));
+
             foreach (var row in rows)
             {
                 var cells = row.FindElements(By.CssSelector(".rt-td"));
-                if (cells.Count == 6 &&
-                    cells[0].Text == webTablesData.FirstName &&
-                    cells[1].Text == webTablesData.LastName &&
-                    cells[2].Text == webTablesData.UserEmail &&
-                    cells[3].Text == webTablesData.Age &&
-                    cells[4].Text == webTablesData.Salary &&
-                    cells[5].Text == webTablesData.Department)
+                if (cells.Count >= 6 && cells[3].Text.Equals(targetEmail, StringComparison.OrdinalIgnoreCase))
                 {
-                    return true;
+                    return [.. cells.Take(6).Select(cell => cell.Text)];
                 }
             }
-            return false;
+
+            throw new Exception($"Rândul cu emailul '{targetEmail}' nu a fost găsit.");
         }
 
     }
