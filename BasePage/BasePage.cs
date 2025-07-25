@@ -7,6 +7,7 @@ using Automation.Tests;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using Pages;
 
 namespace Automation.BasePage
 {
@@ -28,6 +29,8 @@ namespace Automation.BasePage
         public PracticeFormsData? practiceFormsData;
         public PracticeForm? practiceForm;
         public WebTablesPageDDT? webTablesPageDDT;
+        public BrowserFactory? browserFactory;
+        public DatePicker? datePicker;
 
         [SetUp]
         public void SetUp()
