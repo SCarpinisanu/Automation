@@ -23,9 +23,10 @@ namespace Automation.Tests
             homePage.ClickOnOption(3); // Click on the first option in the home page
             commonPage.GoToDesiredMenuItem("Date Picker"); // Navigate to the Date Picker page
             
-            datePicker.SelectDate("March", 2010, 19); // Select a date in the "Select Date" field
-            datePicker.SelectDateAndTime("February", 2032, 6, "10:30"); // Select a date and time in the "Date And Time" field
-            
+            datePicker.SelectDate("March", 2100, 19); // Select a date in the "Select Date" field
+            Thread.Sleep(1000); // Wait for a second to see the selected date
+            datePicker.SelectDateAndTime("February", 2052, 6, "10:30"); // Select a date and time in the "Date And Time" field
+            Thread.Sleep(1000); // Wait for a second to see the selected date and time
         }
     }
 }
